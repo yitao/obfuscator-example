@@ -1,0 +1,10 @@
+com.example.proguard.module.b.WorldUtils -> com.example.proguard.module.b.a:
+    void <init>() -> <init>
+com.example.proguard.module.b.bean.World -> com.example.proguard.module.b.bean.World:
+    java.lang.String name -> name
+    void <init>() -> <init>
+    java.lang.String getName() -> getName
+    void setName(java.lang.String) -> setName
+com.example.proguard.module.b.service.WorldService -> com.example.proguard.module.b.service.a:
+    void <init>() -> <init>
+    java.lang.String getInfo(com.example.proguard.module.b.bean.World) -> a

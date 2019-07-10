@@ -1,0 +1,6 @@
+com.example.proguard.module.a.Application -> com.example.proguard.module.a.Application:
+    void <init>() -> <init>
+    void main(java.lang.String[]) -> a
+com.example.proguard.module.a.HelloController -> com.example.proguard.module.a.a:
+    void <init>() -> <init>
+    java.lang.String world(java.lang.String) -> a

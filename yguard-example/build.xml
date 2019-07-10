@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="yguard" basedir=".">
+
+    <!-- edit the following lines to your needs -->
+    <target name="init">
+        <property name="project_name" value="DemoProject"/>
+        <property name="srcDir" value="./src"/>
+        <property name="classDir" value="classes"/>
+        <property name="jar" value="${project_name}.jar"/>
+        <property name="obfjar" value="${project_name}_obf.jar"/>
+        <property name="renamelog" value="${project_name}_renamelog.xml"/>
+        <property name="shrinklog" value="${project_name}_shrinklog.xml"/>
+        <property name="mainclass" value="com.mycompany.myapp.Main"/>
+        <mkdir dir="${classDir}"/>
+    </target>
+
+
+    <target depends="jar" name="yguard">
+        <taskdef file="lib/yguard.jar" name="yguard" classname="com.yworks.yguard.YGuardTask"/>
+        <!-- the following can be adjusted to your needs -->
+        <yguard>
+
+            <inoutpair in="classes.jar" out="classes_obf.jar"/>
+            <inoutpair in="utils.jar" out="utils_obf.jar"/>
+
+            <!-- don't let the obfuscator remove the "Deprecated" -->
+            <!-- attributes from the .class file entries -->
+            <attribute name="Deprecated"/>
+
+            <shrink
+                    logfile="shrinklog.xml">
+                <keep>
+                    <class classes="protected"
+                           methods="protected"
+                           fields="protected"/>
+                </keep>
+            </shrink>
+
+            <rename mainclass="com.mycompany.myapp.Main"
+                    logfile="obflog.xml">
+                <keep>
+                    <class classes="protected"
+                           methods="protected"
+                           fields="protected"/>
+                </keep>
+            </rename>
+
+        </yguard>
+    </target>
+
+    <!-- compile -->
+    <target name="compile" depends="init">
+        <javac srcdir="${srcDir}" includes="com/mycompany/**/*.java"
+               destdir="${classDir}">
+        </javac>
+    </target>
+
+    <!-- create .jar -->
+    <target name="jar" depends="compile">
+        <jar jarfile="${jar}"
+             basedir="${classDir}"
+             includes="com/mycompany/**">
+            <fileset dir="${srcDir}">
+                <include name="com/mycompany/resources/*.properties"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- run project -->
+    <target name="run" depends="yguard">
+        <java classname="${mainclass}" fork="true">
+            <classpath>
+                <pathelement location="${obfjar}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!-- removes all that has been built -->
+    <target name="clean" depends="init">
+        <delete dir="${classDir}" includeEmptyDirs="true"/>
+    </target>
+</project>

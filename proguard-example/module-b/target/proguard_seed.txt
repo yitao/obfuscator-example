@@ -1,0 +1,5 @@
+com.example.proguard.module.b.bean.World
+com.example.proguard.module.b.bean.World: java.lang.String name
+com.example.proguard.module.b.bean.World: World()
+com.example.proguard.module.b.bean.World: java.lang.String getName()
+com.example.proguard.module.b.bean.World: void setName(java.lang.String)

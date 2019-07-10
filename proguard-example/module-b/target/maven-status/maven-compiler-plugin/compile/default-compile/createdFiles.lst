@@ -1,0 +1,3 @@
+com/example/proguard/module/b/bean/World.class
+com/example/proguard/module/b/WorldUtils.class
+com/example/proguard/module/b/service/WorldService.class
